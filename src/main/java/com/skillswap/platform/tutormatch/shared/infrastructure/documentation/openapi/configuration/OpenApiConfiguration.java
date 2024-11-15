@@ -1,5 +1,3 @@
-package com.skillswap.platform.tutormatch.shared.infrastructure.documentation.openapi.configuration;
-
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -7,14 +5,16 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OpenApiConfiguration {
+
     @Bean
     public OpenAPI learningPlatformOpenApi() {
-        // General configuration
+        // Configuración general
         var openApi = new OpenAPI();
         openApi
                 .info(new Info()
@@ -25,12 +25,13 @@ public class OpenApiConfiguration {
                                 .url("https://springdoc.org")))
                 .externalDocs(new ExternalDocumentation()
                         .description("SkillSwapINC TutorMatch wiki Documentation")
-                        .url("https://github.com/SkillSwapINC/TutorMatch-Report"));
+                        .url("https://github.com/SkillSwapINC/TutorMatch-Report"))
+                .addServersItem(new Server()
+                        .url("https://beneficial-enjoyment-production.up.railway.app")
+                        .description("Railway Production Server"));
 
-        // Add security scheme
-
+        // Configuración de esquema de seguridad (opcional)
         /*final String securitySchemeName = "bearerAuth";
-
         openApi.addSecurityItem(new SecurityRequirement()
                         .addList(securitySchemeName))
                 .components(new Components()
@@ -41,8 +42,7 @@ public class OpenApiConfiguration {
                                         .scheme("bearer")
                                         .bearerFormat("JWT")));*/
 
-        // Return OpenAPI configuration object with all the settings
-
+        // Retorna el objeto de configuración de OpenAPI con todos los ajustes
         return openApi;
     }
 }
